@@ -1,3 +1,3 @@
-[submodule "day2/clap"]
-	path = day2/clap
+[submodule "clap"]
+	path = clap
 	url = https://github.com/Hejsil/zig-clap

@@ -1,4 +1,6 @@
 const std = @import("std");
+const Pkg = std.build.Pkg;
+const FileSource = std.build.FileSource;
 
 pub fn build(b: *std.build.Builder) void {
     // Standard target options allows the person running `zig build` to choose
@@ -12,9 +14,11 @@ pub fn build(b: *std.build.Builder) void {
     const mode = b.standardReleaseOptions();
 
     const exe = b.addExecutable("day2", "src/main.zig");
-    exe.addPackagePath("clap", "clap/clap.zig");
     exe.setTarget(target);
     exe.setBuildMode(mode);
+    exe.addPackage(Pkg{ .name = "common", .source = FileSource.relative("../common/common.zig"), .dependencies = &[_]Pkg{
+        Pkg{ .name = "clap", .source = FileSource.relative("../clap/clap.zig") },
+    } });
     exe.install();
 
     const run_cmd = exe.run();

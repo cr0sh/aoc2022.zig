@@ -1,5 +1,5 @@
 const std = @import("std");
-const clap = @import("clap");
+const common = @import("common");
 
 const GameResult = enum {
     win,
@@ -89,18 +89,7 @@ pub fn main() !void {
 
     const alloc = arena.allocator();
 
-    const params = comptime clap.parseParamsComptime(
-        \\-h, --help            Prints this help message
-        \\-s, --stage <u32>     Stage 1/2 selector
-    );
-    var diag = clap.Diagnostic{};
-    var res = clap.parse(clap.Help, &params, clap.parsers.default, .{ .diagnostic = &diag }) catch |err| {
-        diag.report(std.io.getStdErr().writer(), err) catch {};
-        return err;
-    };
-    defer res.deinit();
-
-    var stage = res.args.stage orelse return clap.help(std.io.getStdErr().writer(), clap.Help, &params, .{});
+    var stage = try common.parseStageFromCli();
 
     var stdin = std.io.getStdIn().reader();
     var score: u64 = 0;
