@@ -12,6 +12,7 @@ pub fn build(b: *std.build.Builder) void {
     const mode = b.standardReleaseOptions();
 
     const exe = b.addExecutable("day2", "src/main.zig");
+    exe.addPackagePath("clap", "clap/clap.zig");
     exe.setTarget(target);
     exe.setBuildMode(mode);
     exe.install();
