@@ -1,3 +1,6 @@
 [submodule "clap"]
 	path = clap
 	url = https://github.com/Hejsil/zig-clap
+[submodule "ctregex.zig"]
+	path = ctregex.zig
+	url = https://github.com/alexnask/ctregex.zig
